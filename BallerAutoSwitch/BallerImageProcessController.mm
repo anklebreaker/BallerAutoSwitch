@@ -12,11 +12,16 @@
 #ifdef __cplusplus
 #include <stdlib.h>
 #import <opencv2/videoio/cap_ios.h>
+//#include "opencv2/highgui/highgui.hpp"
+#include <stdio.h>
+#include <math.h>
+
+#include <opencv2/opencv.hpp>
+
 #endif
 
 using namespace cv;
 using namespace std;
-
 
 @interface BallerImageProcessController ()
 
@@ -24,13 +29,11 @@ using namespace std;
 @property std::deque<cv::Mat> ring;
 
 @property Ptr<BackgroundSubtractorMOG2> bgMOG2;
+
 #endif
 
 @end
 
-int gaussianBlurDimension; // must be odd
-int binaryThreshold;
-double accumulationAlpha;
 
 
 @implementation BallerImageProcessController
@@ -71,6 +74,245 @@ double accumulationAlpha;
     
 }
 
+- (BOOL)overexposed:(UIImage *)img {
+    return false;
+}
+
+- (BOOL)underexposed:(UIImage *)img {
+    return false;
+}
+
+- (UIImage *)autoBrightnessContrast:(UIImage *)img {
+    return img;
+}
+
+- (void)convertImage:(UIImage *)img {
+    cv::Mat image = [[self class] cvMatFromUIImage:img];
+    cv::Mat bgr;
+    cvtColor(image, bgr, CV_BGRA2BGR);
+    cv::Mat hsv;
+    cvtColor(bgr, hsv, CV_BGR2HSV);
+    split(hsv, hsvim);
+    
+    image.release();
+    bgr.release();
+    hsv.release();
+}
+
+- (UIImage *)histogram {
+    //create histogram
+    float range[] = {0, 256};
+    const float* ranges[] = {range};
+    int histSize[] = {256};
+    int channels[] = {0};
+    calcHist(&hsvim[2], 1, channels, Mat(), hist, 1, histSize, ranges);
+    
+    //create cdf
+    cdf = hist.clone();
+    for (int i=1; i<histSize[0]; i++) {
+        cdf.at<float>(i) += cdf.at<float>(i-1);
+    }
+    for (int i=0; i<histSize[0]; i++) {
+        cdf.at<float>(i) /= cdf.at<float>(255);
+    }
+    
+    //Draw histogram pdf
+    int hist_w = 512; int hist_h = 400;
+    int bin_w = cvRound((double) hist_w/256);
+    Mat histImage(hist_h, hist_w, CV_8UC1, Scalar(255, 255, 255));
+//    std::vector<float> array(hist.rows*hist.cols);
+//    for(int i=0; i<256; i++) {
+//        array[i] = hist.at<float>(0, i);
+//    }
+//    // find the maximum intensity element from histogram
+//    int max = array[0];
+//    for(int i = 1; i < 256; i++){
+//        if(max < array[i]){
+//            max = array[i];
+//        }
+//    }
+//    for(int i = 0; i < 256; i++){
+//        array[i] = ((double)array[i]/max)*histImage.rows;
+//    }
+//    // draw the intensity line for histogram
+//    for(int i = 0; i < 256; i++)
+//    {
+//        line(histImage, cv::Point(bin_w*(i), hist_h),
+//             cv::Point(bin_w*(i), hist_h - array[i]),
+//             Scalar(0,0,0), 1, 8, 0);
+//    }
+//
+    return [[self class] UIImageFromCVMat:histImage];
+    //return NULL;
+}
+
+- (BOOL)overexposed {
+    cv::Size s = hsvim[2].size();
+    int shape = s.height * s.width;
+    int white = (int) hist.at<float>(0, 255);
+    float whiteProp = ((float) white) / shape;
+    int oe = 0;
+    if (whiteProp > 0.18) {
+        oe = 1;
+    }
+    if (overexp.size() >= 90) {
+        int fronto = overexp.front();
+        sumoe -= fronto;
+        overexp.pop();
+    }
+    sumoe += oe;
+    overexp.push(oe);
+    float avgoe = ((float) sumoe) / overexp.size();
+    if (avgoe > 0.5) {
+        return true;
+    }
+    return false;
+}
+
+-(BOOL)underexposed {
+    float ueclip = cdf.at<float>(254) - 0.1;
+    int p = [self argmaxcdf:ueclip];
+    int ue = 0;
+    if (p < 150) {
+        ue = 1;
+    }
+    if (underexp.size() >= 90) {
+        int frontu = underexp.front();
+        sumue -= frontu;
+        underexp.pop();
+    }
+    sumue += ue;
+    underexp.push(ue);
+    float avgue = ((float) sumue) / underexp.size();
+    if (avgue > 0.5) {
+        return true;
+    }
+    return false;
+}
+
+-(UIImage *)autoBrightnessContrast {
+    float clip = 0.004;
+    
+    //adjust top clip for special cases like underexposure from windows
+    int normtop = [self argmaxcdf:(1 - clip)];
+    float cliph;
+    //if (hist.at<float>(0, 254)*hist.at<float>(0, 255) > 0) { //prevents overclipping of generally underexposed images?
+        int lever = normtop - [self argmaxcdf:0.9];
+        if (lever < 30) {
+            cliph = clip;
+        } else {
+            if (lever >= 60){
+                cliph = 0.03;
+            } else {
+                float s = ((float)(lever - 30)) / (60 - 30); //linear smoothing
+                cliph = s * (0.03 - clip) + clip;
+            }
+        }
+//    } else {
+//        cliph = clip;
+//    }
+    cliph = cdf.at<float>(254) - cliph;
+    
+    //histclip, find max and min of histogram to clip
+    int min = [self argmaxcdf:clip];
+    int max = [self argmaxcdf:cliph];
+    
+    //clip image
+   threshold(hsvim[2], hsvim[2], max, 255, THRESH_TRUNC);
+    Mat threshl(1, 256, CV_8U);
+    for (int i = 0; i<256; i++) {
+        if (i <= min) {
+            threshl.at<uchar>(0, i) = min;
+        } else {
+            threshl.at<uchar>(0, i) = i;
+        }
+    }
+    LUT(hsvim[2], threshl, hsvim[2]);
+    
+    //adjust contrast and brightness
+    int bright = 10;
+    if (max > min) {
+        float alpha = ((float)(255 - bright)) / (max - min);
+        float beta = alpha * min;
+        Mat lut(1, 256, CV_8U);
+        for (int i=0; i<256; i++) {
+            int val = round(i*alpha - beta + bright);
+            if (val > 255) {
+                val = 255;
+            }
+            lut.at<uchar>(0, i) = val;
+        }
+        LUT(hsvim[2], lut, hsvim[2]);
+    }
+    
+    //combine layers and convert
+    Mat merged;
+    merge(hsvim, merged);
+    Mat mergedbgr;
+    cvtColor(merged, mergedbgr, CV_HSV2BGR);
+    return [[self class] UIImageFromCVMat:mergedbgr];
+//    float range[] = {0, 256};
+//    const float* ranges[] = {range};
+//    int histSize[] = {256};
+//    int channels[] = {0};
+//    Mat histtest;
+//    calcHist(&hsvim[2], 1, channels, Mat(), histtest, 1, histSize, ranges);
+//
+//    //Draw histogram pdf
+//    int hist_w = 512; int hist_h = 400;
+//    int bin_w = cvRound((double) hist_w/256);
+//    Mat histImage(hist_h, hist_w, CV_8UC1, Scalar(255, 255, 255));
+//    std::vector<float> array(histtest.rows*histtest.cols);
+//    for(int i=0; i<256; i++) {
+//        array[i] = histtest.at<float>(0, i);
+//    }
+//    // find the maximum intensity element from histogram
+//    int maxt = array[0];
+//    for(int i = 1; i < 256; i++){
+//        if(maxt < array[i]){
+//            maxt = array[i];
+//        }
+//    }
+//    for(int i = 0; i < 256; i++){
+//        array[i] = ((double)array[i]/maxt)*histImage.rows;
+//    }
+//    // draw the intensity line for histogram
+//    for(int i = 0; i < 256; i++)
+//    {
+//        line(histImage, cv::Point(bin_w*(i), hist_h),
+//             cv::Point(bin_w*(i), hist_h - array[i]),
+//             Scalar(0,0,0), 1, 8, 0);
+//    }
+//
+//    return [[self class] UIImageFromCVMat:histImage];
+}
+
+-(int)argmaxcdf: (float)clip {
+    float array [256];
+    //std::vector<int> array(hist.rows*hist.cols);
+    for(int i=0; i<256; i++) {
+        array[i] = cdf.at<float>(0, i);
+    }
+    
+    int low = 0, high = 256; // numElems is the size of the array i.e arr.size()
+    while (low != high) {
+        int mid = (low + high) / 2; // Or a fancy way to avoid int overflow
+        if (array[mid] <= clip) {
+            low = mid + 1;
+        }
+        else {
+            /* This element is at least as large as the element, so anything after it can't
+             * be the first element that's at least as large.
+             */
+            high = mid;
+        }
+    }
+    int p = high;
+    if (p >= 0 && p < 256) {
+        return p;
+    }
+    return -1;
+}
 
 - (UIImage *)thresholdedImage:(UIImage *)img {
     UIImage *thresholdedImage = img;
@@ -81,7 +323,6 @@ double accumulationAlpha;
     CGFloat ratio = ogCols/ogRows;
     
     cv::resize(image, image, cv::Size(ratio * 360, 360));
-    
     
     CGFloat cols = image.cols;
     CGFloat rows = image.rows;
@@ -133,7 +374,6 @@ double accumulationAlpha;
     return thresholdedImage;
     
 }
-
 
 - (float)computeMotionIntensity:(UIImage *)img {
 

@@ -9,5 +9,4 @@ target 'BallerAutoSwitch' do
 
 pod 'OpenCV'
 
-
 end

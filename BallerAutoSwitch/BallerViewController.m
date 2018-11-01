@@ -5,7 +5,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-
 @interface BallerViewController ()
 //@property (nonatomic, retain) NSTimer *nextFrameTimer;
 
@@ -42,8 +41,8 @@
         
 //        NSString *URL = @"rtsp://52.87.63.85:1935/live/Amcrest1080.stream";
         
-        NSString *URL = @"rtsp://192.168.0.101:1935/live/left";
-        NSString *URL1 = @"rtsp://192.168.0.101:1935/live/right";
+        NSString *URL = @"rtsp://admin:Baller*269@192.168.0.51";
+        NSString *URL1 = @"rtsp://admin:Baller*269@192.168.0.51";
 
         
         
@@ -333,6 +332,13 @@
         
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            UIImage *im;
+            [self.leftVideoController convertImage:image];
+            [self.leftVideoController histogram];
+            BOOL oex = [self.leftVideoController overexposed];
+            BOOL uex = [self.leftVideoController underexposed];
+            im = [self.leftVideoController autoBrightnessContrast];
+            
             if([name isEqualToString:@"first"]){
                 [_imageViewLeft setImage:image];
                 
@@ -347,6 +353,7 @@
 //                        [_processedViewLeft setImage:threshold];
                     });
                 });
+
                 
             }else if([name isEqualToString:@"second"]){
                 [_imageViewRight setImage:image];
@@ -362,6 +369,7 @@
 //                        [_processedViewRight setImage:thresholdRight];
                     });
                 });
+
             }
             
             // check (force 2 consecutive frames of the same video before changing)
@@ -384,12 +392,12 @@
                 }
             }
             
-            
-            if (_selected == 1) {
-                [_imageViewBig setImage:_imageViewLeft.image];
-            } else {
-                [_imageViewBig setImage:_imageViewRight.image];
-            }
+            [_imageViewBig setImage:im];
+//            if (_selected == 1) {
+//                [_imageViewBig setImage:_imageViewLeft.image];
+//            } else {
+//                [_imageViewBig setImage:_imageViewRight.image];
+//            }
             
             CGImageRef cgImage = _imageViewBig.image.CGImage;
             

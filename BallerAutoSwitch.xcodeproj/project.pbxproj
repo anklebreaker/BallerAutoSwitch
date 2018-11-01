@@ -43,12 +43,11 @@
 		105944A51FE33F65003B8A80 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 105944A41FE33F65003B8A80 /* libiconv.tbd */; };
 		105944A71FE33F98003B8A80 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 105944A61FE33F98003B8A80 /* libbz2.tbd */; };
 		105944AB1FE3401B003B8A80 /* BallerViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 105944AA1FE3401B003B8A80 /* BallerViewController_iPad.xib */; };
-		22A100B54F9B6982C63BAACA /* libPods-BallerAutoSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C71384CA72DB8E13B436C60 /* libPods-BallerAutoSwitch.a */; };
 		3907ECE51FE94C74006C3F07 /* libnanostreamAVC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3907ECE41FE94C74006C3F07 /* libnanostreamAVC.a */; };
+		9E05777B443AA37E0BC26E95 /* libPods-BallerAutoSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBE90FF638DF781D82EBA77A /* libPods-BallerAutoSwitch.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		07565F0C9C8DDC1E66D69841 /* Pods-BallerAutoSwitch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BallerAutoSwitch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BallerAutoSwitch/Pods-BallerAutoSwitch.debug.xcconfig"; sourceTree = "<group>"; };
 		105943D71FE334F0003B8A80 /* BallerAutoSwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BallerAutoSwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		105943E11FE334F0003B8A80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		105943E31FE334F0003B8A80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -60,7 +59,7 @@
 		105943F31FE335AC003B8A80 /* NSXTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSXTimer.m; sourceTree = "<group>"; };
 		105943F41FE335AC003B8A80 /* NSXCustomCaptureSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSXCustomCaptureSession.h; sourceTree = "<group>"; };
 		105943F51FE335AC003B8A80 /* NSXTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSXTimer.h; sourceTree = "<group>"; };
-		105943F61FE335AD003B8A80 /* BallerImageProcessController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BallerImageProcessController.mm; sourceTree = "<group>"; };
+		105943F61FE335AD003B8A80 /* BallerImageProcessController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = BallerImageProcessController.mm; sourceTree = "<group>"; };
 		105943F71FE335AD003B8A80 /* BallerImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallerImageHelper.h; sourceTree = "<group>"; };
 		105943F81FE335AD003B8A80 /* BallerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallerViewController.m; sourceTree = "<group>"; };
 		105943F91FE335AD003B8A80 /* BallerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallerAppDelegate.m; sourceTree = "<group>"; };
@@ -195,8 +194,9 @@
 		105944A61FE33F98003B8A80 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		105944AA1FE3401B003B8A80 /* BallerViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BallerViewController_iPad.xib; sourceTree = "<group>"; };
 		3907ECE41FE94C74006C3F07 /* libnanostreamAVC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libnanostreamAVC.a; sourceTree = "<group>"; };
-		8C71384CA72DB8E13B436C60 /* libPods-BallerAutoSwitch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BallerAutoSwitch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E37DE86D881C55DC117CC0CC /* Pods-BallerAutoSwitch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BallerAutoSwitch.release.xcconfig"; path = "Pods/Target Support Files/Pods-BallerAutoSwitch/Pods-BallerAutoSwitch.release.xcconfig"; sourceTree = "<group>"; };
+		446ABED3713E36FE69CC6B5E /* Pods-BallerAutoSwitch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BallerAutoSwitch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BallerAutoSwitch/Pods-BallerAutoSwitch.debug.xcconfig"; sourceTree = "<group>"; };
+		612A6CEA4EAF7CC9C551598E /* Pods-BallerAutoSwitch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BallerAutoSwitch.release.xcconfig"; path = "Pods/Target Support Files/Pods-BallerAutoSwitch/Pods-BallerAutoSwitch.release.xcconfig"; sourceTree = "<group>"; };
+		EBE90FF638DF781D82EBA77A /* libPods-BallerAutoSwitch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BallerAutoSwitch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,34 +222,25 @@
 				1059448A1FE33671003B8A80 /* VideoToolbox.framework in Frameworks */,
 				105944811FE33621003B8A80 /* libavfilter.a in Frameworks */,
 				105944801FE33621003B8A80 /* libavutil.a in Frameworks */,
-				22A100B54F9B6982C63BAACA /* libPods-BallerAutoSwitch.a in Frameworks */,
 				105944831FE33621003B8A80 /* libavformat.a in Frameworks */,
 				105944861FE33621003B8A80 /* libswscale.a in Frameworks */,
 				105944841FE33621003B8A80 /* libavdevice.a in Frameworks */,
 				105944851FE33621003B8A80 /* libswresample.a in Frameworks */,
 				105944821FE33621003B8A80 /* libavcodec.a in Frameworks */,
+				9E05777B443AA37E0BC26E95 /* libPods-BallerAutoSwitch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		05BA319FA4BC6C21615A28D9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				07565F0C9C8DDC1E66D69841 /* Pods-BallerAutoSwitch.debug.xcconfig */,
-				E37DE86D881C55DC117CC0CC /* Pods-BallerAutoSwitch.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		105943CE1FE334F0003B8A80 = {
 			isa = PBXGroup;
 			children = (
 				105943D91FE334F0003B8A80 /* BallerAutoSwitch */,
 				105943D81FE334F0003B8A80 /* Products */,
-				05BA319FA4BC6C21615A28D9 /* Pods */,
 				E5C1BF53DBE2B8961DDDCB3A /* Frameworks */,
+				41D66F2CCAF6D92DECAAB220 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -501,6 +492,15 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		41D66F2CCAF6D92DECAAB220 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				446ABED3713E36FE69CC6B5E /* Pods-BallerAutoSwitch.debug.xcconfig */,
+				612A6CEA4EAF7CC9C551598E /* Pods-BallerAutoSwitch.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E5C1BF53DBE2B8961DDDCB3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,7 +520,7 @@
 				1059448B1FE33679003B8A80 /* SystemConfiguration.framework */,
 				105944891FE33671003B8A80 /* VideoToolbox.framework */,
 				3907ECE41FE94C74006C3F07 /* libnanostreamAVC.a */,
-				8C71384CA72DB8E13B436C60 /* libPods-BallerAutoSwitch.a */,
+				EBE90FF638DF781D82EBA77A /* libPods-BallerAutoSwitch.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -532,12 +532,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 105943ED1FE334F0003B8A80 /* Build configuration list for PBXNativeTarget "BallerAutoSwitch" */;
 			buildPhases = (
-				FDA1DFD15E6A4F62916E6DBB /* [CP] Check Pods Manifest.lock */,
+				9D2AF4CB604D23D6A579F8F8 /* [CP] Check Pods Manifest.lock */,
 				105943D31FE334F0003B8A80 /* Sources */,
 				105943D41FE334F0003B8A80 /* Frameworks */,
 				105943D51FE334F0003B8A80 /* Resources */,
-				D7347001D381FC364BF48C82 /* [CP] Embed Pods Frameworks */,
-				FB2194384C4F0098CB40E360 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -596,37 +594,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D7347001D381FC364BF48C82 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BallerAutoSwitch/Pods-BallerAutoSwitch-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FB2194384C4F0098CB40E360 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BallerAutoSwitch/Pods-BallerAutoSwitch-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FDA1DFD15E6A4F62916E6DBB /* [CP] Check Pods Manifest.lock */ = {
+		9D2AF4CB604D23D6A579F8F8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -792,12 +760,12 @@
 		};
 		105943EE1FE334F0003B8A80 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 07565F0C9C8DDC1E66D69841 /* Pods-BallerAutoSwitch.debug.xcconfig */;
+			baseConfigurationReference = 446ABED3713E36FE69CC6B5E /* Pods-BallerAutoSwitch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8CKF86T97Q;
+				DEVELOPMENT_TEAM = Z6XABZ2FQ5;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BallerAutoSwitch/Baller-prefix.pch";
@@ -816,7 +784,7 @@
 					"$(PROJECT_DIR)/BallerAutoSwitch/FFMpegiOS/lib",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.getballer.BallerAutoSwitch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getballer.BallerAutoSwitcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -824,12 +792,12 @@
 		};
 		105943EF1FE334F0003B8A80 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E37DE86D881C55DC117CC0CC /* Pods-BallerAutoSwitch.release.xcconfig */;
+			baseConfigurationReference = 612A6CEA4EAF7CC9C551598E /* Pods-BallerAutoSwitch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8CKF86T97Q;
+				DEVELOPMENT_TEAM = Z6XABZ2FQ5;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BallerAutoSwitch/Baller-prefix.pch";
@@ -848,7 +816,7 @@
 					"$(PROJECT_DIR)/BallerAutoSwitch/FFMpegiOS/lib",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.getballer.BallerAutoSwitch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getballer.BallerAutoSwitcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
